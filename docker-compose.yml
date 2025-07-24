@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile  # explicit Dockerfile reference
+    container_name: chainsight-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env  # primary env file
+    environment:
+      # Explicitly list critical variables that should override .env if needed
+      - DJANGO_SETTINGS_MODULE=chainsightai_api.settings
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG:-False}
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=${DB_NAME:-postgres}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      # - DB_PORT=${DB_PORT:-5432}  # Changed default to standard PostgreSQL port
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./media:/app/media
+      - ./logs:/app/logs
+    restart: unless-stopped
+    depends_on:
+      - redis  # explicit dependency
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  redis:
+    image: redis:7-alpine
+    container_name: chainsight-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  redis_data:
+    driver: local
