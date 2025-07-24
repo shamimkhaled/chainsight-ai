@@ -75,14 +75,18 @@ WSGI_APPLICATION = 'chainsightai_api.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # Database
+# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='chainsight_db'),
+        'NAME': config('DB_NAME', default='postgres'),
         'USER': config('DB_USER', default='chainsight_user'),
         'PASSWORD': config('DB_PASSWORD', default='password'),
         'HOST': config('DB_HOST', default=''),
-        'PORT': config('DB_PORT', default=''),
+        'PORT': config('DB_PORT', default='5432'),
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 
@@ -151,7 +155,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # OpenAI Configuration
-OPENAI_API_KEY = config('OPENAI_API_KEY', default='')
+OPENAI_API_KEY = config('OPENAI_API_KEY')
 
 
 # REST Framework
