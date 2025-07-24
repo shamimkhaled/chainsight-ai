@@ -7,7 +7,7 @@ class ContractUploadSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ContractAnalysis
-        fields = ['file', 'industry', 'language']
+        fields = ['file', 'industry']
     
     def validate_file(self, value):
         # Check file size (max 10MB)

@@ -94,7 +94,7 @@ class ContractAIAnalyzer:
 
     def __init__(self):
         openai.api_key = settings.OPENAI_API_KEY
-        self.model = "gpt-4o"
+        self.model = "gpt-4.1"
         self.max_tokens = 4000
 
     def create_analysis_prompt(self, contract_text: str, industry: str, language: str) -> str:
