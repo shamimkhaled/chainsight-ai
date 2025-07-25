@@ -1,7 +1,8 @@
 # ChainSight API - Request & Response Formats
 
 ## System Architechture - All
-Click to [overview](system_architecture_diagram.pdf)
+[📄 View System Architecture (PDF)](system_architecture_diagram.pdf)
+
 
 ## 📡 API Base URL
 ```
