@@ -1,12 +1,13 @@
 # ChainSight Contract AI Intelligence Analyst - Django REST API
 
-AI-powered contract analysis API with GPT-4.1 and OCR support for scanned documents.
+ChainSight AI is a Django REST API that provides AI-powered contract analysis using OpenAI's GPT-4 model. It automatically processes various document formats (PDF, DOCX, TXT, images) and provides comprehensive risk assessment and recommendations specific to different industries.
 
 ## Features
 
 - 🔍 **Smart Document Processing**: Automatically detects scanned vs searchable PDFs
 - 🤖 **AI-Powered Analysis**: Uses OpenAI model GPT-4.1 for comprehensive contract analysis
 - 🏭 **Industry-Specific**: Tailored analysis for Garment, IT, General, and Construction industries
+- 📚 **OCR Support**: Processes scanned documents and images using Tesseract
 - 📊 **Structured Output**: Detailed JSON responses with risk scores and recommendations
 - 🚦 **Rate Limiting**: 5 documents per day per IP address
 - 🔒 **Secure**: Built-in security features and validation
@@ -18,6 +19,17 @@ AI-powered contract analysis API with GPT-4.1 and OCR support for scanned docume
 - DOCX (Word documents)
 - TXT (Text files)
 - JPG/JPEG/PNG (Images with text)
+
+
+## Technology Stack
+
+- Backend: Django 5.2.4 + Django REST Framework
+- Database: PostgreSQL with SSL
+- Cache/Queue: Redis
+- AI: OpenAI GPT-4.1 model
+- OCR: Tesseract + PIL + pdf2image
+- Documentation: Swagger/OpenAPI (drf-yasg)
+- Deployment: Docker + Gunicorn
 
 ## Quick Start
 
