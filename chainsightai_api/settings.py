@@ -204,6 +204,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "https://chainsightai.com",
     "http://localhost:8080",
+    "https://chainsightai-frontend.vercel.app/",
 ]
 
 
