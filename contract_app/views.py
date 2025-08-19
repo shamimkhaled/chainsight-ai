@@ -1,4 +1,4 @@
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, generics
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -14,9 +14,10 @@ from drf_yasg import openapi
 import os
 import logging
 from datetime import datetime, timedelta
+from django.db import models
 
-from .models import ContractAnalysis, RateLimitTracker
-from .serializers import ContractUploadSerializer, ContractAnalysisSerializer, ContractAnalysisListSerializer
+from .models import ContractAnalysis, RateLimitTracker, Waitlist
+from .serializers import ContractUploadSerializer, ContractAnalysisSerializer, ContractAnalysisListSerializer, WaitlistSerializer
 from .document_processors import ContractDocumentProcessor
 from .ai_analyzers import ContractAIAnalyzer
 # from .tasks import process_contract_async
@@ -295,3 +296,88 @@ def rate_limit_status(request):
         'can_proceed': can_proceed,
         'reset_time': timezone.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
     })
+    
+    
+    
+    # views.py
+class WaitlistCreateView(generics.CreateAPIView):
+    queryset = Waitlist.objects.all()
+    serializer_class = WaitlistSerializer
+    
+    def create(self, request, *args, **kwargs):
+        try:
+            # Get client info
+            ip_address = self.get_client_ip(request)
+            user_agent = request.META.get('HTTP_USER_AGENT', '')
+            referrer = request.META.get('HTTP_REFERER', '')
+            
+            # Add client info to data
+            data = request.data.copy()
+            data['ip_address'] = ip_address
+            data['user_agent'] = user_agent
+            data['referrer'] = referrer
+            
+            serializer = self.get_serializer(data=data)
+            if serializer.is_valid():
+                waitlist_entry = serializer.save()
+                
+                # Log successful registration
+                logger.info(f"New waitlist registration: {waitlist_entry.email} from {ip_address}")
+                
+                return Response({
+                    'success': True,
+                    'message': 'Successfully joined the waitlist!',
+                    'data': WaitlistSerializer(waitlist_entry).data
+                }, status=status.HTTP_201_CREATED)
+            
+            return Response({
+                'success': False,
+                'message': 'Validation failed',
+                'errors': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
+        except Exception as e:
+            logger.error(f"Waitlist registration error: {str(e)}")
+            return Response({
+                'success': False,
+                'message': 'An error occurred while processing your request'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def get_client_ip(self, request):
+        """Get client IP address"""
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
+
+@api_view(['GET'])
+def waitlist_stats(request):
+    """Get waitlist statistics"""
+    try:
+        total_count = Waitlist.objects.filter(is_active=True).count()
+        region_stats = (
+            Waitlist.objects
+            .filter(is_active=True)
+            .values('region')
+            .annotate(count=models.Count('region'))
+            .order_by('-count')
+        )
+        
+        return Response({
+            'success': True,
+            'data': {
+                'total_members': total_count,
+                'by_region': list(region_stats)
+            }
+        })
+    except Exception as e:
+        logger.error(f"Waitlist stats error: {str(e)}")
+        return Response({
+            'success': False,
+            'message': 'Error fetching statistics'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+

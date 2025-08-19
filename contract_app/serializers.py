@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ContractAnalysis
+from .models import ContractAnalysis, Waitlist
 import os
 
 class ContractUploadSerializer(serializers.ModelSerializer):
@@ -61,3 +61,29 @@ class ContractAnalysisListSerializer(serializers.ModelSerializer):
             'id', 'original_filename', 'industry', 'language',
             'status', 'risk_score', 'created_at'
         ]
+        
+        
+
+class WaitlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Waitlist
+        fields = [
+            'id', 'full_name', 'email', 'company', 'region', 
+            'created_at', 'updated_at', 'is_active'
+        ]
+        read_only_fields = ['id', 'created_at', 'updated_at', 'is_active']
+    
+    def validate_email(self, value):
+        """Check if email already exists"""
+        if Waitlist.objects.filter(email=value, is_active=True).exists():
+            raise serializers.ValidationError("This email is already registered in our wishlist.")
+        return value
+    
+    def validate_full_name(self, value):
+        """Validate full name"""
+        if len(value.strip()) < 2:
+            raise serializers.ValidationError("Full name must be at least 2 characters long.")
+        return value.strip()
+
+        
+        

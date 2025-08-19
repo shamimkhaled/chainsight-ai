@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from django.core.validators import EmailValidator
 
 class ContractAnalysis(models.Model):
     INDUSTRY_CHOICES = [
@@ -69,3 +70,42 @@ class RateLimitTracker(models.Model):
     
     def __str__(self):
         return f"{self.user_ip} - {self.daily_count}/5"
+    
+    
+
+
+
+class Waitlist(models.Model):
+    REGION_CHOICES = [
+        ('MENA', 'MENA'),
+        ('South Asia', 'South Asia'),
+        ('Africa', 'Africa'),
+        ('Other', 'Other'),
+        ]
+    
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    full_name = models.CharField(max_length=255)
+    email = models.EmailField(validators=[EmailValidator()])
+    company = models.CharField(max_length=255, blank=True, null=True)
+    region = models.CharField(max_length=50, choices=REGION_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+    
+    
+    class Meta:
+        db_table = 'wishlist'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['email']),
+            models.Index(fields=['region']),
+            models.Index(fields=['created_at']),
+        ]
+    
+    def __str__(self):
+        return f"{self.full_name} ({self.email})"
+    
+    
+    
+
