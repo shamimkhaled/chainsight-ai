@@ -122,7 +122,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 
 env/
@@ -162,7 +161,6 @@ cython_debug/
 .idea/
 
 # VS Code
-.vscode/
 *.code-workspace
 
 # Sublime Text
@@ -208,11 +206,6 @@ db.sqlite3-journal
 .secret_key
 
 # Environment variables
-.env
-.env.local
-.env.development
-.env.test
-.env.production
 
 # Configuration files with sensitive data
 config.ini
@@ -530,10 +523,6 @@ bundle-stats.json
 .yarn-integrity
 
 # dotenv environment variables file (keep this last for clarity)
-.env
-.env.test
-.env.production
-.env.local
 
 # Local environment overrides
 .env.*.local
@@ -552,3 +541,4 @@ bundle-stats.json
 # Example: Ignore generated documentation
 # api_docs/
 # schema_docs/
+config.bat
