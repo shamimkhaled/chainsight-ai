@@ -205,6 +205,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://chainsightai.com",
     "http://localhost:8080",
     "https://chainsightai-frontend.vercel.app",
+    "https://sea-turtle-app-rl9vi.ondigitalocean.app",
 ]
 
 
