@@ -1,0 +1,69 @@
+# Django
+Django
+djangorestframework
+django-environ
+django-cors-headers
+django-filter
+psycopg2-binary
+
+django-redis
+
+# Authentication
+djangorestframework-simplejwt
+
+# Database
+pymongo
+redis
+
+# Celery
+celery
+django-celery-beat
+django-celery-results
+
+# AWS
+boto3
+django-storages
+
+# AI/ML
+openai
+langchain
+pinecone-client
+tiktoken
+
+# Document Processing
+PyPDF2
+python-docx
+Pillow
+pytesseract
+pdf2image
+python-pptx
+
+# Export
+reportlab
+WeasyPrint
+
+# Communications
+twilio
+sendgrid
+
+# API Documentation
+drf-yasg
+
+# Security
+cryptography
+
+# Monitoring
+sentry-sdk
+prometheus-client
+
+# Utilities
+python-dateutil
+pytz
+requests
+whitenoise
+
+# Development
+pytest
+pytest-django
+pytest-cov
+faker
