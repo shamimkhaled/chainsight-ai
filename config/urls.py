@@ -34,8 +34,9 @@ urlpatterns = [
         # Apps
         path('', include('apps.accounts.urls')),
         path('', include('apps.contracts.urls')),
-        # path('', include('apps.tenants.urls')),
-        # path('', include('apps.counterparties.urls')),
+        path('', include('apps.tenants.urls')),
+        path('', include('apps.counterparties.urls')),
+        path('', include('apps.dashboard.urls')),
         # path('', include('apps.suppliers.urls')),
         # path('', include('apps.alerts.urls')),
         # path('', include('apps.analysis.urls')),
@@ -43,13 +44,12 @@ urlpatterns = [
         # path('', include('apps.integrations.urls')),
         # path('', include('apps.repository.urls')),
         # path('', include('apps.compliance.urls')),
-        # path('', include('apps.dashboard.urls')),
     ])),
 
     # API documentation
     path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/docs/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-    # Health check - commented out as health_check package is not installed
-    # path('api/health/', include('health_check.urls')),
+    # Health check and monitoring
+    path('api/health/', include('apps.core.urls')),
 ]
