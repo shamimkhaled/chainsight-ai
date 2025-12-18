@@ -38,6 +38,9 @@ class ContractViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Filter queryset by tenant"""
+        # Handle swagger schema generation
+        if getattr(self, 'swagger_fake_view', False):
+            return Contract.objects.none()
         return Contract.objects.filter(
             tenant=self.request.user.tenant
         ).select_related(

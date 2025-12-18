@@ -1,0 +1,245 @@
+<mxfile host="app.diagrams.net" modified="2025-11-26T00:00:00.000Z" agent="ChainSight AI Database Schema" version="22.1.11">
+  <diagram name="ChainSight AI - Database Schema" id="chainsight-db-schema">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3200" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Core Models Section -->
+        <mxCell id="core-label" value="CORE MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="30" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Tenant Table -->
+        <mxCell id="tenant" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;TENANT&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;name (VARCHAR)&lt;br&gt;subdomain (VARCHAR, UNIQUE)&lt;br&gt;company_name (VARCHAR)&lt;br&gt;logo (VARCHAR)&lt;br&gt;status (VARCHAR)&lt;br&gt;is_active (BOOLEAN)&lt;br&gt;plan_type (VARCHAR)&lt;br&gt;is_trial (BOOLEAN)&lt;br&gt;trial_ends_at (DATETIME)&lt;br&gt;subscription_start (DATETIME)&lt;br&gt;subscription_end (DATETIME)&lt;br&gt;contact_email (VARCHAR)&lt;br&gt;contact_phone (VARCHAR)&lt;br&gt;address (TEXT)&lt;br&gt;city (VARCHAR)&lt;br&gt;country (VARCHAR)&lt;br&gt;settings (JSONB)&lt;br&gt;user_count (INT)&lt;br&gt;contract_count (INT)&lt;br&gt;storage_used (BIGINT)&lt;br&gt;max_users (INT)&lt;br&gt;max_contracts (INT)&lt;br&gt;max_storage (BIGINT)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="70" width="280" height="420" as="geometry" />
+        </mxCell>
+        
+        <!-- User Table -->
+        <mxCell id="user" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;USER&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;email (VARCHAR, UNIQUE)&lt;br&gt;password (VARCHAR)&lt;br&gt;first_name (VARCHAR)&lt;br&gt;last_name (VARCHAR)&lt;br&gt;phone_number (VARCHAR)&lt;br&gt;role (VARCHAR)&lt;br&gt;profile_picture (VARCHAR)&lt;br&gt;bio (TEXT)&lt;br&gt;timezone (VARCHAR)&lt;br&gt;language (VARCHAR)&lt;br&gt;is_active (BOOLEAN)&lt;br&gt;is_verified (BOOLEAN)&lt;br&gt;email_verified_at (DATETIME)&lt;br&gt;password_changed_at (DATETIME)&lt;br&gt;is_staff (BOOLEAN)&lt;br&gt;is_superuser (BOOLEAN)&lt;br&gt;preferences (JSONB)&lt;br&gt;last_login (DATETIME)&lt;br&gt;date_joined (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="380" y="70" width="280" height="380" as="geometry" />
+        </mxCell>
+        
+        <!-- Contract Models Section -->
+        <mxCell id="contract-label" value="CONTRACT MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="530" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Contract Table -->
+        <mxCell id="contract" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CONTRACT&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;original_filename (VARCHAR)&lt;br&gt;title (VARCHAR)&lt;br&gt;file_path (VARCHAR)&lt;br&gt;file_hash (VARCHAR)&lt;br&gt;file_size (BIGINT)&lt;br&gt;mime_type (VARCHAR)&lt;br&gt;contract_type (VARCHAR)&lt;br&gt;contract_number (VARCHAR)&lt;br&gt;description (TEXT)&lt;br&gt;counterparty_name (VARCHAR)&lt;br&gt;contract_value (DECIMAL)&lt;br&gt;currency (VARCHAR)&lt;br&gt;effective_date (DATE)&lt;br&gt;expiry_date (DATE)&lt;br&gt;auto_renewal (BOOLEAN)&lt;br&gt;status (VARCHAR)&lt;br&gt;risk_level (VARCHAR)&lt;br&gt;is_archived (BOOLEAN)&lt;br&gt;archived_at (DATETIME)&lt;br&gt;analysis_status (VARCHAR)&lt;br&gt;analysis_progress (INT)&lt;br&gt;analyzed_at (DATETIME)&lt;br&gt;analysis_error (TEXT)&lt;br&gt;page_count (INT)&lt;br&gt;word_count (INT)&lt;br&gt;tags (ARRAY)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="570" width="300" height="540" as="geometry" />
+        </mxCell>
+        
+        <!-- Contract Analysis Table -->
+        <mxCell id="contract-analysis" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CONTRACT_ANALYSIS&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;contract_id (FK → CONTRACT)&lt;br&gt;risk_score (INT)&lt;br&gt;risk_level (VARCHAR)&lt;br&gt;compliance_score (INT)&lt;br&gt;sentiment_score (FLOAT)&lt;br&gt;summary (TEXT)&lt;br&gt;key_terms (JSONB)&lt;br&gt;obligations (JSONB)&lt;br&gt;risks (JSONB)&lt;br&gt;recommendations (JSONB)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="400" y="570" width="280" height="260" as="geometry" />
+        </mxCell>
+        
+        <!-- Clause Table -->
+        <mxCell id="clause" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CLAUSE&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;contract_id (FK → CONTRACT)&lt;br&gt;clause_type (VARCHAR)&lt;br&gt;title (VARCHAR)&lt;br&gt;text (TEXT)&lt;br&gt;risk_level (VARCHAR)&lt;br&gt;is_standard (BOOLEAN)&lt;br&gt;page_number (INT)&lt;br&gt;start_position (INT)&lt;br&gt;end_position (INT)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="400" y="870" width="280" height="240" as="geometry" />
+        </mxCell>
+        
+        <!-- Counterparty Models Section -->
+        <mxCell id="counterparty-label" value="COUNTERPARTY MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="730" y="530" width="250" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Counterparty Table -->
+        <mxCell id="counterparty" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;COUNTERPARTY&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;name (VARCHAR)&lt;br&gt;legal_name (VARCHAR)&lt;br&gt;counterparty_type (VARCHAR)&lt;br&gt;registration_number (VARCHAR)&lt;br&gt;tax_id (VARCHAR)&lt;br&gt;contact_email (VARCHAR)&lt;br&gt;contact_phone (VARCHAR)&lt;br&gt;website (VARCHAR)&lt;br&gt;address (TEXT)&lt;br&gt;city (VARCHAR)&lt;br&gt;state (VARCHAR)&lt;br&gt;postal_code (VARCHAR)&lt;br&gt;country (VARCHAR)&lt;br&gt;industry (VARCHAR)&lt;br&gt;description (TEXT)&lt;br&gt;is_verified (BOOLEAN)&lt;br&gt;verified_at (DATETIME)&lt;br&gt;is_active (BOOLEAN)&lt;br&gt;risk_score (INT)&lt;br&gt;risk_factors (JSONB)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="730" y="570" width="300" height="440" as="geometry" />
+        </mxCell>
+        
+        <!-- Contract Counterparty Junction Table -->
+        <mxCell id="contract-counterparty" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CONTRACT_COUNTERPARTY&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;contract_id (FK → CONTRACT)&lt;br&gt;counterparty_id (FK → COUNTERPARTY)&lt;br&gt;role (VARCHAR)&lt;br&gt;is_primary (BOOLEAN)&lt;br&gt;signatory_name (VARCHAR)&lt;br&gt;signatory_title (VARCHAR)&lt;br&gt;signing_date (DATE)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="570" width="300" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- AI & Chat Models Section -->
+        <mxCell id="ai-label" value="AI & CHAT MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1420" y="30" width="250" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Chat Session Table -->
+        <mxCell id="chat-session" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CHAT_SESSION&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;user_id (FK → USER)&lt;br&gt;title (VARCHAR)&lt;br&gt;contracts (M2M → CONTRACT)&lt;br&gt;message_count (INT)&lt;br&gt;is_active (BOOLEAN)&lt;br&gt;metadata (JSONB)&lt;br&gt;last_message_at (DATETIME)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="70" width="300" height="220" as="geometry" />
+        </mxCell>
+        
+        <!-- Chat Message Table -->
+        <mxCell id="chat-message" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CHAT_MESSAGE&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;session_id (FK → CHAT_SESSION)&lt;br&gt;message_type (VARCHAR)&lt;br&gt;message (TEXT)&lt;br&gt;sources (JSONB)&lt;br&gt;feedback (VARCHAR)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="70" width="280" height="160" as="geometry" />
+        </mxCell>
+        
+        <!-- AI Agent Table -->
+        <mxCell id="ai-agent" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;AI_AGENT&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;name (VARCHAR)&lt;br&gt;agent_type (VARCHAR)&lt;br&gt;description (TEXT)&lt;br&gt;config (JSONB)&lt;br&gt;is_active (BOOLEAN)&lt;br&gt;trigger_on (VARCHAR)&lt;br&gt;actions (JSONB)&lt;br&gt;execution_count (INT)&lt;br&gt;success_rate (FLOAT)&lt;br&gt;last_executed_at (DATETIME)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="330" width="280" height="260" as="geometry" />
+        </mxCell>
+        
+        <!-- Agent Execution Table -->
+        <mxCell id="agent-execution" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;AGENT_EXECUTION&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;agent_id (FK → AI_AGENT)&lt;br&gt;status (VARCHAR)&lt;br&gt;input_data (JSONB)&lt;br&gt;result_data (JSONB)&lt;br&gt;error_message (TEXT)&lt;br&gt;execution_time (FLOAT)&lt;br&gt;started_at (DATETIME)&lt;br&gt;completed_at (DATETIME)&lt;br&gt;created_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="330" width="280" height="220" as="geometry" />
+        </mxCell>
+        
+        <!-- Integration Models Section -->
+        <mxCell id="integration-label" value="INTEGRATION MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1420" y="630" width="250" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Integration Table -->
+        <mxCell id="integration" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;INTEGRATION&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;name (VARCHAR)&lt;br&gt;integration_type (VARCHAR)&lt;br&gt;config (JSONB)&lt;br&gt;credentials (JSONB)&lt;br&gt;access_token (TEXT)&lt;br&gt;refresh_token (TEXT)&lt;br&gt;token_expires_at (DATETIME)&lt;br&gt;is_active (BOOLEAN)&lt;br&gt;is_connected (BOOLEAN)&lt;br&gt;last_sync_at (DATETIME)&lt;br&gt;auto_sync (BOOLEAN)&lt;br&gt;sync_interval (VARCHAR)&lt;br&gt;last_error (TEXT)&lt;br&gt;error_count (INT)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="670" width="300" height="320" as="geometry" />
+        </mxCell>
+        
+        <!-- ERP Entity Table -->
+        <mxCell id="erp-entity" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;ERP_ENTITY&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;integration_id (FK → INTEGRATION)&lt;br&gt;entity_type (VARCHAR)&lt;br&gt;external_id (VARCHAR)&lt;br&gt;external_reference (VARCHAR)&lt;br&gt;entity_data (JSONB)&lt;br&gt;contract_id (FK → CONTRACT)&lt;br&gt;counterparty_id (FK → COUNTERPARTY)&lt;br&gt;last_synced_at (DATETIME)&lt;br&gt;sync_status (VARCHAR)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="670" width="300" height="240" as="geometry" />
+        </mxCell>
+        
+        <!-- Alert Models Section -->
+        <mxCell id="alert-label" value="ALERT MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="2100" y="30" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Alert Rule Table -->
+        <mxCell id="alert-rule" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;ALERT_RULE&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;name (VARCHAR)&lt;br&gt;description (TEXT)&lt;br&gt;alert_type (VARCHAR)&lt;br&gt;severity (VARCHAR)&lt;br&gt;conditions (JSONB)&lt;br&gt;channels (ARRAY)&lt;br&gt;recipients (ARRAY)&lt;br&gt;actions (JSONB)&lt;br&gt;is_active (BOOLEAN)&lt;br&gt;trigger_count (INT)&lt;br&gt;last_triggered_at (DATETIME)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2100" y="70" width="280" height="280" as="geometry" />
+        </mxCell>
+        
+        <!-- Alert Table -->
+        <mxCell id="alert" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;ALERT&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;rule_id (FK → ALERT_RULE)&lt;br&gt;alert_type (VARCHAR)&lt;br&gt;severity (VARCHAR)&lt;br&gt;title (VARCHAR)&lt;br&gt;message (TEXT)&lt;br&gt;contract_id (FK → CONTRACT)&lt;br&gt;supplier_id (FK → SUPPLIER)&lt;br&gt;status (VARCHAR)&lt;br&gt;priority (VARCHAR)&lt;br&gt;data (JSONB)&lt;br&gt;acknowledged_by_id (FK → USER)&lt;br&gt;acknowledged_at (DATETIME)&lt;br&gt;resolved_by_id (FK → USER)&lt;br&gt;resolved_at (DATETIME)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2420" y="70" width="300" height="320" as="geometry" />
+        </mxCell>
+        
+        <!-- Workflow Models Section -->
+        <mxCell id="workflow-label" value="WORKFLOW MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="2100" y="430" width="250" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Workflow Template Table -->
+        <mxCell id="workflow-template" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;WORKFLOW_TEMPLATE&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;name (VARCHAR)&lt;br&gt;workflow_type (VARCHAR)&lt;br&gt;description (TEXT)&lt;br&gt;steps (JSONB)&lt;br&gt;default_assignees (JSONB)&lt;br&gt;default_priority (VARCHAR)&lt;br&gt;estimated_duration (INT)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2100" y="470" width="300" height="220" as="geometry" />
+        </mxCell>
+        
+        <!-- Workflow Instance Table -->
+        <mxCell id="workflow-instance" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;WORKFLOW_INSTANCE&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;template_id (FK → WORKFLOW_TEMPLATE)&lt;br&gt;contract_id (FK → CONTRACT)&lt;br&gt;status (VARCHAR)&lt;br&gt;current_step (INT)&lt;br&gt;assignees (ARRAY)&lt;br&gt;due_date (DATE)&lt;br&gt;priority (VARCHAR)&lt;br&gt;step_data (JSONB)&lt;br&gt;started_at (DATETIME)&lt;br&gt;completed_at (DATETIME)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2450" y="470" width="300" height="260" as="geometry" />
+        </mxCell>
+        
+        <!-- Template & Comparison Models Section -->
+        <mxCell id="template-label" value="TEMPLATE & COMPARISON" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="2100" y="770" width="300" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Contract Template Table -->
+        <mxCell id="contract-template" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CONTRACT_TEMPLATE&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;created_by_id (FK → USER)&lt;br&gt;name (VARCHAR)&lt;br&gt;template_type (VARCHAR)&lt;br&gt;description (TEXT)&lt;br&gt;template_text (TEXT)&lt;br&gt;variables (JSONB)&lt;br&gt;default_values (JSONB)&lt;br&gt;is_public (BOOLEAN)&lt;br&gt;usage_count (INT)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad9d5;strokeColor=#ae4132;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2100" y="810" width="300" height="260" as="geometry" />
+        </mxCell>
+        
+        <!-- Document Comparison Table -->
+        <mxCell id="document-comparison" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;DOCUMENT_COMPARISON&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;source_contract_id (FK → CONTRACT)&lt;br&gt;target_contract_id (FK → CONTRACT)&lt;br&gt;comparison_type (VARCHAR)&lt;br&gt;similarity_score (FLOAT)&lt;br&gt;differences (JSONB)&lt;br&gt;additions (INT)&lt;br&gt;deletions (INT)&lt;br&gt;modifications (INT)&lt;br&gt;redline_file_path (VARCHAR)&lt;br&gt;status (VARCHAR)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad9d5;strokeColor=#ae4132;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2450" y="810" width="320" height="280" as="geometry" />
+        </mxCell>
+        
+        <!-- Collaboration Table -->
+        <mxCell id="contract-comment" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CONTRACT_COMMENT&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;contract_id (FK → CONTRACT)&lt;br&gt;clause_id (FK → CLAUSE)&lt;br&gt;user_id (FK → USER)&lt;br&gt;parent_id (FK → CONTRACT_COMMENT)&lt;br&gt;content (TEXT)&lt;br&gt;comment_type (VARCHAR)&lt;br&gt;page_number (INT)&lt;br&gt;highlighted_text (TEXT)&lt;br&gt;is_resolved (BOOLEAN)&lt;br&gt;resolved_at (DATETIME)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d0cee2;strokeColor=#56517e;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2820" y="70" width="320" height="280" as="geometry" />
+        </mxCell>
+        
+        <!-- Contract Embedding Table -->
+        <mxCell id="contract-embedding" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;CONTRACT_EMBEDDING&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;contract_id (FK → CONTRACT)&lt;br&gt;vector_id (VARCHAR)&lt;br&gt;chunk_index (INT)&lt;br&gt;text_chunk (TEXT)&lt;br&gt;page_number (INT)&lt;br&gt;embedding_model (VARCHAR)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2820" y="390" width="300" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- Supplier Table -->
+        <mxCell id="supplier" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;SUPPLIER&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;tenant_id (FK → TENANT)&lt;br&gt;counterparty_id (FK → COUNTERPARTY)&lt;br&gt;supplier_number (VARCHAR)&lt;br&gt;supplier_category (VARCHAR)&lt;br&gt;payment_terms (VARCHAR)&lt;br&gt;delivery_terms (VARCHAR)&lt;br&gt;is_preferred (BOOLEAN)&lt;br&gt;performance_score (INT)&lt;br&gt;certifications (JSONB)&lt;br&gt;metadata (JSONB)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="730" y="1050" width="300" height="240" as="geometry" />
+        </mxCell>
+        
+        <!-- Marketing Tables -->
+        <mxCell id="marketing-label" value="MARKETING MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="2820" y="630" width="250" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="waitlist-entry" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;WAITLIST_ENTRY&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;email (VARCHAR, UNIQUE)&lt;br&gt;full_name (VARCHAR)&lt;br&gt;phone_number (VARCHAR)&lt;br&gt;company_name (VARCHAR)&lt;br&gt;company_size (VARCHAR)&lt;br&gt;industry (VARCHAR)&lt;br&gt;status (VARCHAR)&lt;br&gt;is_priority (BOOLEAN)&lt;br&gt;notes (TEXT)&lt;br&gt;invited_at (DATETIME)&lt;br&gt;signed_up_at (DATETIME)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#36393d;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2820" y="670" width="300" height="260" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="demo-request" value="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;DEMO_REQUEST&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (PK, UUID)&lt;br&gt;email (VARCHAR)&lt;br&gt;full_name (VARCHAR)&lt;br&gt;phone_number (VARCHAR)&lt;br&gt;company_name (VARCHAR)&lt;br&gt;company_size (VARCHAR)&lt;br&gt;industry (VARCHAR)&lt;br&gt;use_case (VARCHAR)&lt;br&gt;message (TEXT)&lt;br&gt;preferred_date (DATE)&lt;br&gt;preferred_time (VARCHAR)&lt;br&gt;status (VARCHAR)&lt;br&gt;demo_completed_at (DATETIME)&lt;br&gt;created_at (DATETIME)&lt;br&gt;updated_at (DATETIME)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#36393d;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="2820" y="970" width="300" height="280" as="geometry" />
+        </mxCell>
+        
+        <!-- Relationships (Arrows) -->
+        <mxCell id="tenant-user" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" edge="1" parent="1" source="tenant" target="user">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="tenant-contract" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=0.5;exitY=1;" edge="1" parent="1" source="tenant" target="contract">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="contract-analysis-rel" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.3;" edge="1" parent="1" source="contract" target="contract-analysis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="contract-clause" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.7;" edge="1" parent="1" source="contract" target="clause">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="contract-counterparty-rel" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" edge="1" parent="1" source="contract" target="contract-counterparty">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="counterparty-contract-rel" style="endArrow=classic;html=1;entryX=0.5;entryY=0;exitX=0.5;exitY=1;" edge="1" parent="1" source="counterparty" target="contract-counterparty">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="user-chat" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" edge="1" parent="1" source="user" target="chat-session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="chat-message-rel" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" edge="1" parent="1" source="chat-session" target="chat-message">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="agent-execution-rel" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" edge="1" parent="1" source="ai-agent" target="agent-execution">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="integration-erp" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" edge="1" parent="1" source="integration" target="erp-entity">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="alert-rule-alert" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" edge="1" parent="1" source="alert-rule" target="alert">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="workflow-template-instance" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" edge="1" parent="1" source="workflow-template" target="workflow-instance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="counterparty-supplier" style="endArrow=classic;html=1;entryX=0.5;entryY=0;exitX=0.5;exitY=1;" edge="1" parent="1" source="counterparty" target="supplier">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1200" width="600" height="180" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-title" value="DATABASE SCHEMA LEGEND" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="1210" width="600" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-text" value="&lt;div style=&quot;text-align: left;&quot;&gt;• PK = Primary Key (UUID)&lt;br&gt;• FK = Foreign Key&lt;br&gt;• M2M = Many-to-Many Relationship&lt;br&gt;• UNIQUE = Unique Constraint&lt;br&gt;• JSONB = JSON Binary (PostgreSQL)&lt;br&gt;• ARRAY = Array/List Type&lt;br&gt;• All timestamps are in UTC&lt;br&gt;• Created/Updated timestamps on all tables&lt;br&gt;• Multi-tenant architecture with tenant_id on most tables&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1250" width="560" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="database-info" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b&gt;ChainSight AI Database Schema&lt;/b&gt;&lt;br&gt;Total Tables: 31&lt;br&gt;Database: PostgreSQL 14+&lt;br&gt;Version: 4.0.0&lt;br&gt;Date: November 26, 2025&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=#e3e3e3;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="700" y="1200" width="300" height="120" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+

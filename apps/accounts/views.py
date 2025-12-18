@@ -24,6 +24,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Filter users by tenant"""
+        # Handle swagger schema generation
+        if getattr(self, 'swagger_fake_view', False):
+            return User.objects.none()
         return User.objects.filter(tenant=self.request.user.tenant)
 
     def get_serializer_class(self):
@@ -122,6 +125,9 @@ class WaitlistViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]  # Only authenticated users can manage waitlist
 
     def get_queryset(self):
+        # Handle swagger schema generation
+        if getattr(self, 'swagger_fake_view', False):
+            return WaitlistEntry.objects.none()
         # Only superusers can see all entries, others see their own
         if self.request.user.is_superuser:
             return WaitlistEntry.objects.all()
@@ -171,6 +177,9 @@ class DemoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]  # Only authenticated users can manage demos
 
     def get_queryset(self):
+        # Handle swagger schema generation
+        if getattr(self, 'swagger_fake_view', False):
+            return DemoRequest.objects.none()
         # Only superusers can see all requests, others see their own
         if self.request.user.is_superuser:
             return DemoRequest.objects.all()

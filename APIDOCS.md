@@ -78,13 +78,17 @@ POST /api/v2/accounts/users/register/
 Content-Type: application/json
 X-Tenant-ID: 1
 
+
 {
-  "email": "user@demo.com",
-  "password": "password123",
-  "password_confirm": "password123",
-  "first_name": "John",
-  "last_name": "Doe",
-  "role": "user"
+  "email": "shamimkhaled@gmail.com",
+  "password": "shamimkhaled9999",
+  "password_confirm": "shamimkhaled9999",
+  "username": "shamim",
+  "first_name": "shamim",
+  "last_name": "khaled",
+  "phone": "987654",
+  "role": "admin/user",
+  "is_active": true
 }
 ```
 

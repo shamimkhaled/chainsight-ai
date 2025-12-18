@@ -24,6 +24,9 @@ class TenantViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Superusers see all tenants, others see their own"""
+        # Handle swagger schema generation
+        if getattr(self, 'swagger_fake_view', False):
+            return Tenant.objects.none()
         if self.request.user.is_superuser:
             return Tenant.objects.all()
         return Tenant.objects.filter(id=self.request.user.tenant.id)

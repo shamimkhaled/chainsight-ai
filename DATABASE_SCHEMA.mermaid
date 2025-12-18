@@ -1,0 +1,574 @@
+```mermaid
+erDiagram
+    %% Core Models
+    TENANT {
+        uuid id PK
+        string name
+        string subdomain UK
+        string company_name
+        string logo
+        string status
+        boolean is_active
+        string plan_type
+        boolean is_trial
+        datetime trial_ends_at
+        datetime subscription_start
+        datetime subscription_end
+        string contact_email
+        string contact_phone
+        string address
+        string city
+        string country
+        json settings
+        integer user_count
+        integer contract_count
+        bigint storage_used
+        integer max_users
+        integer max_contracts
+        bigint max_storage
+        datetime created_at
+        datetime updated_at
+    }
+    
+    USER {
+        uuid id PK
+        uuid tenant_id FK
+        string email UK
+        string password
+        string first_name
+        string last_name
+        string phone_number
+        string role
+        string profile_picture
+        text bio
+        string timezone
+        string language
+        boolean is_active
+        boolean is_verified
+        datetime email_verified_at
+        datetime password_changed_at
+        boolean is_staff
+        boolean is_superuser
+        json preferences
+        datetime last_login
+        datetime date_joined
+    }
+    
+    %% Contract Models
+    CONTRACT {
+        uuid id PK
+        uuid tenant_id FK
+        string original_filename
+        string title
+        string file_path
+        string file_hash
+        bigint file_size
+        string mime_type
+        string contract_type
+        string contract_number
+        text description
+        string counterparty_name
+        decimal contract_value
+        string currency
+        date effective_date
+        date expiry_date
+        boolean auto_renewal
+        string status
+        string risk_level
+        boolean is_archived
+        datetime archived_at
+        string analysis_status
+        integer analysis_progress
+        datetime analyzed_at
+        text analysis_error
+        integer page_count
+        integer word_count
+        array tags
+        json metadata
+        datetime created_at
+        datetime updated_at
+    }
+    
+    CONTRACT_ANALYSIS {
+        uuid id PK
+        uuid tenant_id FK
+        uuid contract_id FK
+        integer risk_score
+        string risk_level
+        integer compliance_score
+        float sentiment_score
+        text summary
+        json key_terms
+        json obligations
+        json risks
+        json recommendations
+        datetime created_at
+        datetime updated_at
+    }
+    
+    CLAUSE {
+        uuid id PK
+        uuid tenant_id FK
+        uuid contract_id FK
+        string clause_type
+        string title
+        text text
+        string risk_level
+        boolean is_standard
+        integer page_number
+        integer start_position
+        integer end_position
+        json metadata
+        datetime created_at
+        datetime updated_at
+    }
+    
+    %% Counterparty Models
+    COUNTERPARTY {
+        uuid id PK
+        uuid tenant_id FK
+        string name
+        string legal_name
+        string counterparty_type
+        string registration_number
+        string tax_id
+        string contact_email
+        string contact_phone
+        string website
+        string address
+        string city
+        string state
+        string postal_code
+        string country
+        string industry
+        text description
+        boolean is_verified
+        datetime verified_at
+        boolean is_active
+        integer risk_score
+        json risk_factors
+        json metadata
+        datetime created_at
+        datetime updated_at
+    }
+    
+    CONTRACT_COUNTERPARTY {
+        uuid id PK
+        uuid contract_id FK
+        uuid counterparty_id FK
+        string role
+        boolean is_primary
+        string signatory_name
+        string signatory_title
+        date signing_date
+        json metadata
+        datetime created_at
+    }
+    
+    %% Supplier Models
+    SUPPLIER {
+        uuid id PK
+        uuid tenant_id FK
+        uuid counterparty_id FK
+        string supplier_number
+        string supplier_category
+        string payment_terms
+        string delivery_terms
+        boolean is_preferred
+        integer performance_score
+        json certifications
+        json metadata
+        datetime created_at
+        datetime updated_at
+    }
+    
+    SUPPLIER_RISK_ASSESSMENT {
+        uuid id PK
+        uuid tenant_id FK
+        uuid supplier_id FK
+        uuid assessed_by_id FK
+        integer financial_risk_score
+        integer operational_risk_score
+        integer compliance_risk_score
+        integer overall_risk_score
+        string risk_level
+        json risk_factors
+        text assessment_notes
+        text mitigation_plan
+        datetime assessment_date
+        datetime next_assessment_date
+        datetime created_at
+        datetime updated_at
+    }
+    
+    %% Chat Models
+    CHAT_SESSION {
+        uuid id PK
+        uuid tenant_id FK
+        uuid user_id FK
+        string title
+        integer message_count
+        boolean is_active
+        json metadata
+        datetime last_message_at
+        datetime created_at
+        datetime updated_at
+    }
+    
+    CHAT_MESSAGE {
+        uuid id PK
+        uuid session_id FK
+        string message_type
+        text message
+        json sources
+        string feedback
+        json metadata
+        datetime created_at
+    }
+    
+    CONTRACT_EMBEDDING {
+        uuid id PK
+        uuid contract_id FK
+        string vector_id
+        integer chunk_index
+        text text_chunk
+        integer page_number
+        string embedding_model
+        json metadata
+        datetime created_at
+    }
+    
+    %% AI Agent Models
+    AI_AGENT {
+        uuid id PK
+        uuid tenant_id FK
+        string name
+        string agent_type
+        text description
+        json config
+        boolean is_active
+        string trigger_on
+        json actions
+        integer execution_count
+        float success_rate
+        datetime last_executed_at
+        datetime created_at
+        datetime updated_at
+    }
+    
+    AGENT_EXECUTION {
+        uuid id PK
+        uuid tenant_id FK
+        uuid agent_id FK
+        string status
+        json input_data
+        json result_data
+        text error_message
+        float execution_time
+        datetime started_at
+        datetime completed_at
+        datetime created_at
+    }
+    
+    %% Template Models
+    CONTRACT_TEMPLATE {
+        uuid id PK
+        uuid tenant_id FK
+        uuid created_by_id FK
+        string name
+        string template_type
+        text description
+        text template_text
+        json variables
+        json default_values
+        boolean is_public
+        integer usage_count
+        json metadata
+        datetime created_at
+        datetime updated_at
+    }
+    
+    %% Comparison Models
+    DOCUMENT_COMPARISON {
+        uuid id PK
+        uuid tenant_id FK
+        uuid source_contract_id FK
+        uuid target_contract_id FK
+        string comparison_type
+        float similarity_score
+        json differences
+        integer additions
+        integer deletions
+        integer modifications
+        string redline_file_path
+        string status
+        json metadata
+        datetime created_at
+        datetime updated_at
+    }
+    
+    %% Collaboration Models
+    CONTRACT_COMMENT {
+        uuid id PK
+        uuid tenant_id FK
+        uuid contract_id FK
+        uuid clause_id FK
+        uuid user_id FK
+        uuid parent_id FK
+        text content
+        string comment_type
+        integer page_number
+        string highlighted_text
+        boolean is_resolved
+        datetime resolved_at
+        json metadata
+        datetime created_at
+        datetime updated_at
+    }
+    
+    %% Workflow Models
+    WORKFLOW_TEMPLATE {
+        uuid id PK
+        uuid tenant_id FK
+        string name
+        string workflow_type
+        text description
+        json steps
+        json default_assignees
+        string default_priority
+        integer estimated_duration
+        datetime created_at
+        datetime updated_at
+    }
+    
+    WORKFLOW_INSTANCE {
+        uuid id PK
+        uuid tenant_id FK
+        uuid template_id FK
+        uuid contract_id FK
+        string status
+        integer current_step
+        array assignees
+        date due_date
+        string priority
+        json step_data
+        datetime started_at
+        datetime completed_at
+        datetime created_at
+        datetime updated_at
+    }
+    
+    %% Integration Models
+    INTEGRATION {
+        uuid id PK
+        uuid tenant_id FK
+        string name
+        string integration_type
+        json config
+        json credentials
+        text access_token
+        text refresh_token
+        datetime token_expires_at
+        boolean is_active
+        boolean is_connected
+        datetime last_sync_at
+        boolean auto_sync
+        string sync_interval
+        text last_error
+        integer error_count
+        datetime created_at
+        datetime updated_at
+    }
+    
+    INTEGRATION_LOG {
+        uuid id PK
+        uuid tenant_id FK
+        uuid integration_id FK
+        string action
+        json request_data
+        json response_data
+        string status
+        text error_message
+        float execution_time
+        datetime created_at
+    }
+    
+    ERP_ENTITY {
+        uuid id PK
+        uuid tenant_id FK
+        uuid integration_id FK
+        string entity_type
+        string external_id
+        string external_reference
+        json entity_data
+        uuid contract_id FK
+        uuid counterparty_id FK
+        datetime last_synced_at
+        string sync_status
+        datetime created_at
+        datetime updated_at
+    }
+    
+    DOCUMENT_SYNC {
+        uuid id PK
+        uuid tenant_id FK
+        uuid integration_id FK
+        uuid contract_id FK
+        string external_document_id
+        string external_document_url
+        string sync_direction
+        boolean auto_sync
+        integer local_version
+        integer external_version
+        datetime last_synced_at
+        boolean has_conflicts
+        json conflict_data
+        datetime created_at
+        datetime updated_at
+    }
+    
+    %% Alert Models
+    ALERT_RULE {
+        uuid id PK
+        uuid tenant_id FK
+        string name
+        text description
+        string alert_type
+        string severity
+        json conditions
+        array channels
+        array recipients
+        json actions
+        boolean is_active
+        integer trigger_count
+        datetime last_triggered_at
+        datetime created_at
+        datetime updated_at
+    }
+    
+    ALERT {
+        uuid id PK
+        uuid tenant_id FK
+        uuid rule_id FK
+        string alert_type
+        string severity
+        string title
+        text message
+        uuid contract_id FK
+        uuid supplier_id FK
+        string status
+        string priority
+        json data
+        uuid acknowledged_by_id FK
+        datetime acknowledged_at
+        uuid resolved_by_id FK
+        datetime resolved_at
+        datetime created_at
+        datetime updated_at
+    }
+    
+    NOTIFICATION_LOG {
+        uuid id PK
+        uuid tenant_id FK
+        uuid alert_id FK
+        string channel
+        string recipient
+        string status
+        datetime sent_at
+        datetime delivered_at
+        text error_message
+        json metadata
+        datetime created_at
+    }
+    
+    %% Marketing Models
+    WAITLIST_ENTRY {
+        uuid id PK
+        string email UK
+        string full_name
+        string phone_number
+        string company_name
+        string company_size
+        string industry
+        string status
+        boolean is_priority
+        text notes
+        datetime invited_at
+        datetime signed_up_at
+        datetime created_at
+        datetime updated_at
+    }
+    
+    DEMO_REQUEST {
+        uuid id PK
+        string email
+        string full_name
+        string phone_number
+        string company_name
+        string company_size
+        string industry
+        string use_case
+        text message
+        date preferred_date
+        string preferred_time
+        string status
+        datetime demo_completed_at
+        datetime created_at
+        datetime updated_at
+    }
+    
+    %% Relationships
+    TENANT ||--o{ USER : "has"
+    TENANT ||--o{ CONTRACT : "owns"
+    TENANT ||--o{ COUNTERPARTY : "manages"
+    TENANT ||--o{ CHAT_SESSION : "has"
+    TENANT ||--o{ AI_AGENT : "configures"
+    TENANT ||--o{ INTEGRATION : "uses"
+    TENANT ||--o{ ALERT_RULE : "defines"
+    
+    USER ||--o{ CONTRACT : "uploads"
+    USER ||--o{ CHAT_SESSION : "creates"
+    USER ||--o{ CHAT_MESSAGE : "sends"
+    USER ||--o{ CONTRACT_COMMENT : "writes"
+    USER ||--o{ CONTRACT_TEMPLATE : "creates"
+    USER }o--o{ ALERT : "acknowledges/resolves"
+    USER ||--o{ SUPPLIER_RISK_ASSESSMENT : "assesses"
+    
+    CONTRACT ||--|| CONTRACT_ANALYSIS : "has"
+    CONTRACT ||--o{ CLAUSE : "contains"
+    CONTRACT ||--o{ CONTRACT_EMBEDDING : "has"
+    CONTRACT }o--o{ COUNTERPARTY : "involves"
+    CONTRACT ||--o{ CONTRACT_COUNTERPARTY : "has"
+    CONTRACT ||--o{ CONTRACT_COMMENT : "has"
+    CONTRACT ||--o{ DOCUMENT_COMPARISON : "compared_in"
+    CONTRACT ||--o{ WORKFLOW_INSTANCE : "follows"
+    CONTRACT ||--o{ DOCUMENT_SYNC : "syncs"
+    CONTRACT }o--o{ CHAT_SESSION : "referenced_in"
+    CONTRACT ||--o{ ERP_ENTITY : "mapped_to"
+    CONTRACT }o--o{ ALERT : "triggers"
+    
+    COUNTERPARTY ||--|| SUPPLIER : "is"
+    COUNTERPARTY ||--o{ CONTRACT_COUNTERPARTY : "participates_in"
+    COUNTERPARTY ||--o{ ERP_ENTITY : "mapped_to"
+    
+    SUPPLIER ||--o{ SUPPLIER_RISK_ASSESSMENT : "assessed_by"
+    SUPPLIER }o--o{ ALERT : "triggers"
+    
+    CHAT_SESSION ||--o{ CHAT_MESSAGE : "contains"
+    
+    CLAUSE ||--o{ CONTRACT_COMMENT : "commented_on"
+    
+    CONTRACT_COMMENT ||--o{ CONTRACT_COMMENT : "replies_to"
+    
+    AI_AGENT ||--o{ AGENT_EXECUTION : "executes"
+    
+    WORKFLOW_TEMPLATE ||--o{ WORKFLOW_INSTANCE : "instantiates"
+    
+    INTEGRATION ||--o{ INTEGRATION_LOG : "logs"
+    INTEGRATION ||--o{ ERP_ENTITY : "syncs"
+    INTEGRATION ||--o{ DOCUMENT_SYNC : "manages"
+    
+    ALERT_RULE ||--o{ ALERT : "triggers"
+    ALERT ||--o{ NOTIFICATION_LOG : "notifies"
+```
+

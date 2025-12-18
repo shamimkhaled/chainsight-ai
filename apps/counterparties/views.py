@@ -32,6 +32,9 @@ class CounterpartyViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Filter queryset by tenant"""
+        # Handle swagger schema generation
+        if getattr(self, 'swagger_fake_view', False):
+            return Counterparty.objects.none()
         return Counterparty.objects.filter(
             tenant=self.request.user.tenant
         )
