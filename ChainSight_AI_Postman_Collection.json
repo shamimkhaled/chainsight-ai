@@ -1,0 +1,1008 @@
+{
+  "info": {
+    "name": "ChainSight AI - Complete API Collection",
+    "description": "Complete API collection for ChainSight AI Contract Intelligence Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api/v1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 Authentication",
+      "item": [
+        {
+          "name": "Register Tenant & Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('access_token', jsonData.access_token);",
+                  "    pm.environment.set('refresh_token', jsonData.refresh_token);",
+                  "    pm.environment.set('tenant_id', jsonData.tenant.id);",
+                  "    pm.environment.set('user_id', jsonData.admin_user.id);",
+                  "    console.log('✅ Tokens and IDs saved to environment');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_name\": \"Acme Corporation\",\n  \"subdomain\": \"acmecorp\",\n  \"admin_email\": \"admin@acmecorp.com\",\n  \"admin_password\": \"SecurePassword123!\",\n  \"admin_first_name\": \"John\",\n  \"admin_last_name\": \"Doe\",\n  \"admin_phone\": \"+1-555-0123\",\n  \"plan_type\": \"professional\",\n  \"billing_email\": \"billing@acmecorp.com\",\n  \"industry\": \"manufacturing\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/register/",
+              "host": ["{{base_url}}"],
+              "path": ["tenants", "register", ""]
+            },
+            "description": "Register a new tenant (company) with admin user"
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('access_token', jsonData.access);",
+                  "    pm.environment.set('refresh_token', jsonData.refresh);",
+                  "    pm.environment.set('tenant_id', jsonData.user.tenant.id);",
+                  "    console.log('✅ Login successful - Tokens saved');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@acmecorp.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/token/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "token", ""]
+            },
+            "description": "Login with email and password to get JWT tokens"
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('access_token', jsonData.access);",
+                  "    console.log('✅ Access token refreshed');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/token/refresh/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "token", "refresh", ""]
+            },
+            "description": "Refresh access token using refresh token"
+          }
+        }
+      ]
+    },
+    {
+      "name": "👥 User Management",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/?page=1&page_size=20",
+              "host": ["{{base_url}}"],
+              "path": ["users", ""],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "page_size",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane.smith@acmecorp.com\",\n  \"password\": \"SecurePassword123!\",\n  \"first_name\": \"Jane\",\n  \"last_name\": \"Smith\",\n  \"role\": \"manager\",\n  \"phone\": \"+1-555-0124\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/",
+              "host": ["{{base_url}}"],
+              "path": ["users", ""]
+            }
+          }
+        },
+        {
+          "name": "Get User Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📄 Contract Management",
+      "item": [
+        {
+          "name": "List Contracts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contracts/?page=1&page_size=20",
+              "host": ["{{base_url}}"],
+              "path": ["contracts", ""],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "page_size",
+                  "value": "20"
+                },
+                {
+                  "key": "status",
+                  "value": "completed",
+                  "disabled": true
+                },
+                {
+                  "key": "search",
+                  "value": "vendor",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Upload Contract",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('contract_id', jsonData.id);",
+                  "    console.log('✅ Contract uploaded - ID: ' + jsonData.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "contract_type",
+                  "value": "Vendor Agreement",
+                  "type": "text"
+                },
+                {
+                  "key": "industry",
+                  "value": "manufacturing",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/contracts/",
+              "host": ["{{base_url}}"],
+              "path": ["contracts", ""]
+            },
+            "description": "Upload a contract file (PDF, DOCX, etc.)"
+          }
+        },
+        {
+          "name": "Get Contract Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contracts/{{contract_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["contracts", "{{contract_id}}", ""]
+            },
+            "description": "Get detailed contract information including analysis"
+          }
+        },
+        {
+          "name": "Analyze Contract",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contracts/{{contract_id}}/analyze/",
+              "host": ["{{base_url}}"],
+              "path": ["contracts", "{{contract_id}}", "analyze", ""]
+            },
+            "description": "Trigger AI analysis for contract"
+          }
+        },
+        {
+          "name": "Batch Upload Contracts",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "files[]",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "files[]",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "industry",
+                  "value": "manufacturing",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/contracts/batch_upload/",
+              "host": ["{{base_url}}"],
+              "path": ["contracts", "batch_upload", ""]
+            }
+          }
+        },
+        {
+          "name": "Archive Contract",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contracts/{{contract_id}}/archive/",
+              "host": ["{{base_url}}"],
+              "path": ["contracts", "{{contract_id}}", "archive", ""]
+            }
+          }
+        },
+        {
+          "name": "Export Contract",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contracts/{{contract_id}}/export/?format=pdf&include_analysis=true",
+              "host": ["{{base_url}}"],
+              "path": ["contracts", "{{contract_id}}", "export", ""],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "pdf"
+                },
+                {
+                  "key": "include_analysis",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💬 RAG Chat System",
+      "item": [
+        {
+          "name": "List Chat Sessions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/chat/sessions/",
+              "host": ["{{base_url}}"],
+              "path": ["chat", "sessions", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Chat Session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('session_id', jsonData.id);",
+                  "    console.log('✅ Chat session created - ID: ' + jsonData.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Questions about Vendor Agreement\",\n  \"contracts\": [\"{{contract_id}}\"],\n  \"model_used\": \"gpt-4\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/chat/sessions/",
+              "host": ["{{base_url}}"],
+              "path": ["chat", "sessions", ""]
+            }
+          }
+        },
+        {
+          "name": "Send Chat Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"What are the payment terms in this contract?\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/chat/sessions/{{session_id}}/message/",
+              "host": ["{{base_url}}"],
+              "path": ["chat", "sessions", "{{session_id}}", "message", ""]
+            },
+            "description": "Ask a question about the contract using RAG"
+          }
+        },
+        {
+          "name": "Get Chat Session Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/chat/sessions/{{session_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["chat", "sessions", "{{session_id}}", ""]
+            }
+          }
+        },
+        {
+          "name": "Provide Message Feedback",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"helpful\": true,\n  \"feedback\": \"Very accurate response with good citations\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/chat/messages/{{message_id}}/feedback/",
+              "host": ["{{base_url}}"],
+              "path": ["chat", "messages", "{{message_id}}", "feedback", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🚨 Alerts & Notifications",
+      "item": [
+        {
+          "name": "List Alert Rules",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/alerts/rules/",
+              "host": ["{{base_url}}"],
+              "path": ["alerts", "rules", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Alert Rule",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('alert_rule_id', jsonData.id);",
+                  "    console.log('✅ Alert rule created');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"High Risk Contract Alert\",\n  \"description\": \"Alert when contract risk score exceeds 80\",\n  \"alert_type\": \"risk_threshold\",\n  \"category\": \"risk_management\",\n  \"conditions\": {\n    \"field\": \"risk_score\",\n    \"operator\": \"gt\",\n    \"value\": 80\n  },\n  \"threshold_value\": 80.0,\n  \"comparison_operator\": \"gt\",\n  \"severity\": \"high\",\n  \"priority\": 8,\n  \"notify_email\": true,\n  \"notify_sms\": false,\n  \"recipients\": [\"legal@acmecorp.com\"],\n  \"is_active\": true,\n  \"check_frequency\": \"realtime\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/alerts/rules/",
+              "host": ["{{base_url}}"],
+              "path": ["alerts", "rules", ""]
+            }
+          }
+        },
+        {
+          "name": "List Alerts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/alerts/?status=active",
+              "host": ["{{base_url}}"],
+              "path": ["alerts", ""],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "active"
+                },
+                {
+                  "key": "severity",
+                  "value": "high",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Acknowledge Alert",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/alerts/{{alert_id}}/acknowledge/",
+              "host": ["{{base_url}}"],
+              "path": ["alerts", "{{alert_id}}", "acknowledge", ""]
+            }
+          }
+        },
+        {
+          "name": "Resolve Alert",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resolution_notes\": \"Issue resolved by updating contract terms\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/alerts/{{alert_id}}/resolve/",
+              "host": ["{{base_url}}"],
+              "path": ["alerts", "{{alert_id}}", "resolve", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Integrations",
+      "item": [
+        {
+          "name": "List Integrations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/integrations/",
+              "host": ["{{base_url}}"],
+              "path": ["integrations", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Integration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Microsoft Word Online\",\n  \"integration_type\": \"microsoft_word\",\n  \"config\": {\n    \"tenant_id\": \"your-microsoft-tenant-id\",\n    \"client_id\": \"your-client-id\"\n  },\n  \"auto_sync\": true,\n  \"sync_interval\": \"hourly\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/integrations/",
+              "host": ["{{base_url}}"],
+              "path": ["integrations", ""]
+            }
+          }
+        },
+        {
+          "name": "Export to Word",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contract_id\": \"{{contract_id}}\",\n  \"include_analysis\": true,\n  \"folder_path\": \"/Contracts/Vendors/\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/integrations/word/export/",
+              "host": ["{{base_url}}"],
+              "path": ["integrations", "word", "export", ""]
+            }
+          }
+        },
+        {
+          "name": "Push to ERP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contract_id\": \"{{contract_id}}\",\n  \"entity_type\": \"contract\",\n  \"mapping\": {\n    \"vendor_code\": \"V12345\",\n    \"cost_center\": \"CC-1000\",\n    \"purchase_order\": \"PO-2024-001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/integrations/erp/push/",
+              "host": ["{{base_url}}"],
+              "path": ["integrations", "erp", "push", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏪 Counterparties",
+      "item": [
+        {
+          "name": "List Counterparties",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/counterparties/",
+              "host": ["{{base_url}}"],
+              "path": ["counterparties", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Counterparty",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Vendor Inc.\",\n  \"legal_name\": \"New Vendor Incorporated\",\n  \"registration_number\": \"REG-54321\",\n  \"tax_id\": \"TAX-09876\",\n  \"contact_email\": \"contact@newvendor.com\",\n  \"contact_phone\": \"+1-555-0300\",\n  \"address\": {\n    \"street\": \"456 Commerce Ave\",\n    \"city\": \"Business City\",\n    \"state\": \"NY\",\n    \"postal_code\": \"10001\",\n    \"country\": \"USA\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/counterparties/",
+              "host": ["{{base_url}}"],
+              "path": ["counterparties", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Counterparty Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/counterparties/{{counterparty_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["counterparties", "{{counterparty_id}}", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 Dashboard & Analytics",
+      "item": [
+        {
+          "name": "Dashboard Overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard/overview/",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard", "overview", ""]
+            },
+            "description": "Get dashboard overview with key metrics"
+          }
+        },
+        {
+          "name": "Contract Analytics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard/analytics/contracts/?start_date=2024-01-01&end_date=2024-12-31",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard", "analytics", "contracts", ""],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "2024-01-01"
+                },
+                {
+                  "key": "end_date",
+                  "value": "2024-12-31"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Generate Risk Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard/reports/risk/?format=pdf",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard", "reports", "risk", ""],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "pdf"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏢 Tenant Management",
+      "item": [
+        {
+          "name": "List Tenants",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tenants/",
+              "host": ["{{base_url}}"],
+              "path": ["tenants", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Tenant Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["tenants", "{{tenant_id}}", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Tenant Settings",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"settings\": {\n    \"branding\": {\n      \"primary_color\": \"#1E40AF\"\n    },\n    \"features\": {\n      \"rag_chat\": true,\n      \"ai_agents\": true\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["tenants", "{{tenant_id}}", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔍 Health & Monitoring",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health/",
+              "host": ["{{base_url}}"],
+              "path": ["health", ""]
+            },
+            "description": "Check API health status (no auth required)"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
