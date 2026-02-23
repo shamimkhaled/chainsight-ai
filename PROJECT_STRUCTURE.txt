@@ -1,0 +1,77 @@
+.
+├── apps
+│   ├── accounts
+│   ├── alerts
+│   ├── analysis
+│   ├── chat
+│   ├── compliance
+│   ├── contracts
+│   ├── core
+│   ├── counterparties
+│   ├── dashboard
+│   ├── integrations
+│   ├── repository
+│   ├── suppliers
+│   └── tenants
+├── config
+│   ├── settings
+│   ├── admin.py
+│   ├── asgi.py
+│   ├── celery.py
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── frontend
+│   ├── FRONTEND_ARCHITECTURE.md
+│   ├── IMPLEMENTATION_GUIDE.md
+│   ├── next.config.js
+│   ├── package.json
+│   ├── quickstart.sh
+│   ├── README.md
+│   ├── tailwind.config.ts
+│   ├── tsconfig.json
+│   └── VISUAL_GUIDE.md
+├── logs
+│   └── chainsight.log
+├── scripts
+│   ├── seed_data.py
+│   └── setup_dev.sh
+├── static
+├── tests
+│   ├── __init__.py
+│   ├── test_analysis.py
+│   ├── test_contracts.py
+│   └── test_integrations.py
+├── ADVANCED_FEATURES_GUIDE.md
+├── ALL_FEATURES_DOCUMENTATION.md
+├── APIDOCS.md
+├── ChainSight_AI_Environment.postman_environment.json
+├── ChainSight_AI_Postman_Collection.json
+├── CHAINSIGHT_DJANGO_BACKEND_COMPLETE.md
+├── COMPLETE_API_DOCUMENTATION.md
+├── COMPLETE_PROJECT_SUMMARY.md
+├── COMPLETE_WORKFLOW_GUIDE.md
+├── DATABASE_SCHEMA.drawio
+├── DATABASE_SCHEMA.mermaid
+├── DB.md
+├── db.sqlite3
+├── DELIVERABLES_SUMMARY.md
+├── DJANGO_ADMIN_GUIDE.md
+├── docker-compose.yml
+├── Dockerfile
+├── FRONTEND_INTEGRATION_COMPLETE.md
+├── FRONTEND_INTEGRATION_GUIDE.md
+├── IMPLEMENTATION_COMPLETE.md
+├── manage.py
+├── MULTI-TENANCY.md
+├── POSTMAN_TESTING_GUIDE.md
+├── PROJECT_STRUCTURE.txt
+├── QUICK_START.md
+├── QUICK_START_POSTMAN.md
+├── README.md
+├── requirements.txt
+├── SAMPLE_TEST_DATA.md
+└── START_HERE.md
+
+22 directories, 53 files

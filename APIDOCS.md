@@ -116,7 +116,7 @@ X-Tenant-ID: 1
 
 #### Login User
 ```http
-POST /api/v2/accounts/users/login/
+POST /api/v1/accounts/users/login/
 Content-Type: application/json
 X-Tenant-ID: 1
 
