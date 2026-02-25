@@ -146,6 +146,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+(BASE_DIR / 'static').mkdir(parents=True, exist_ok=True)
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -399,6 +400,7 @@ REDOC_SETTINGS = {
 }
 
 # Logging
+(BASE_DIR / 'logs').mkdir(parents=True, exist_ok=True)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

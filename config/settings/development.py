@@ -11,10 +11,17 @@ DATABASES['default'].update({
     'PORT': env('DB_PORT', default='5432'),
 })
 
-# Cache - Use local Redis
-CACHES['default']['LOCATION'] = env('REDIS_URL', default='redis://localhost:6379/0')
+# Cache & Sessions - Use local memory (no Redis required)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'KEY_PREFIX': 'chainsight',
+        'TIMEOUT': 300,
+    }
+}
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-# Celery - Use local Redis
+# Celery - Use local Redis (optional; background tasks require Redis)
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND', default='redis://localhost:6379/0')
 
