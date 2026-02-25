@@ -146,8 +146,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-(BASE_DIR / 'static').mkdir(parents=True, exist_ok=True)
-STATICFILES_DIRS = [BASE_DIR / 'static']
+try:
+    (BASE_DIR / 'static').mkdir(parents=True, exist_ok=True)
+except OSError:
+    pass  # Read-only filesystem (e.g. Vercel) - static/ must exist in repo
+STATICFILES_DIRS = [BASE_DIR / 'static'] if (BASE_DIR / 'static').exists() else []
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
