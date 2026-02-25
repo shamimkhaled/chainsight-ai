@@ -101,7 +101,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -128,7 +127,6 @@ dmypy.json
 .pyre/
 
 # IDEs
-.vscode/
 .idea/
 
 # OS generated files
@@ -167,3 +165,4 @@ yarn-error.log*
 # Secrets
 secrets.json
 config/secrets.py
+config.bat
