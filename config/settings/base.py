@@ -403,7 +403,10 @@ REDOC_SETTINGS = {
 }
 
 # Logging
-(BASE_DIR / 'logs').mkdir(parents=True, exist_ok=True)
+try:
+    (BASE_DIR / 'logs').mkdir(parents=True, exist_ok=True)
+except OSError:
+    pass  # Read-only filesystem (e.g. Vercel)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
